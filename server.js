@@ -4,6 +4,7 @@ const app = express();
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
+const path = require("path");
 
 const users = {};
 
@@ -29,11 +30,11 @@ io.on("connection", (socket) => {
   });
 });
 
-if (process.env.PROD){
-    app.use(express.static(path.join(__dirname, './client/build')))
-    app.get('*',(req,res)=>{
-        res.sendFile(path.join(__dirname, './client/build/index.html'))
-    })
+if (process.env.PROD) {
+  app.use(express.static(path.join(__dirname, "./client/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  });
 }
 
 server.listen(process.env.PORT || 7000, () =>
